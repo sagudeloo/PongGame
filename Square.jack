@@ -10,8 +10,8 @@
  */
 class Square {
 
-    // Location on the screen
-    field int x, y;
+    // Location and default location on the screen
+    field int x, y, defaultX, defaultY;
 
     // The size of the square
     field int size;
@@ -19,7 +19,9 @@ class Square {
     /** Constructs a new square with a given location and size. */
     constructor Square new(int Ax, int Ay) {
         let x = Ax;
+        let defaultX = Ax;
         let y = Ay;
+        let defaultY = Ay;
         let size = 10;
 
         do draw();
@@ -44,6 +46,13 @@ class Square {
     method void erase() {
         do Screen.setColor(false);
         do Screen.drawRectangle(x, y, x + size, y + size);
+        return;
+    }
+
+    // Reset the square position
+    method void reset() {
+        let x = defaultX;
+        let y = defaultY;
         return;
     }
 
