@@ -1,0 +1,73 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/09/Square/Square.jack
+
+/**
+ * Esta clase implementa un Rectangulo que representa
+ * un jugador de juego pong
+ */
+class Character {
+
+    // Location on the screen
+    field int x, y;
+
+    // The size of the square
+    field int width, height;
+
+    /** Constructs a new square with a given location and size. */
+    constructor Character new(int Ax, int Ay) {
+        let x = Ax;
+        let y = Ay;
+        let width = 10;
+        let height = 40;
+
+        do draw();
+
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Draws the character on the screen. */
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        return;
+    }
+
+    /** Erases the character from the screen. */
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        return;
+    }
+
+    /** Moves up by 1 pixels. */
+    method void moveUp() {
+        if (y > 1) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, (y + height) - 1, x + width, y + height);
+            let y = y - 1;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + width, y + 1);
+        }
+        return;
+    }
+
+    /** Moves down by 1 pixels. */
+    method void moveDown() {
+        if ((y + height) < 254) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + height, y + 1);
+            let y = y + 1;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, (y + height) - 1, x + width, y + height);
+        }
+        return;
+    }
+}
