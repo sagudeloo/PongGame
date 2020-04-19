@@ -18,12 +18,12 @@ class SquareGame {
     field Square square;
 
     // The square's movement direction
-    field int direction; // 0=none,1=up,2=down,3=left,4=right
+    field int squareDirection; // 0=none,1=up,2=down,3=left,4=right
 
     /** Constructs a new Square Game. */
     constructor SquareGame new() {
-        let square = Square.new(0, 0, 30);
-        let direction = 0;
+        let square = Square.new(0, 0);
+        let squareDirection = 0;
 
         return this;
     }
@@ -36,7 +36,7 @@ class SquareGame {
     }
 
     /** Starts the game. Handles inputs from the user that control
-     *  the square's movement, direction and size. */
+     *  the square's movement,direction and size. */
     method void run() {
         var char key;
         var boolean exit;
@@ -47,43 +47,40 @@ class SquareGame {
             // waits for a key to be pressed.
             while (key = 0) {
                 let key = Keyboard.keyPressed();
-                do moveSquare();
+                //do moveSquare();
             }
 
             if (key = 81) {
                 let exit = true;
             }
-            if (key = 90) {
-                do square.decSize();
+            if (key = 56) {
+                let squareDirection = 1;
             }
-            if (key = 88) {
-                do square.incSize();
+            if (key = 50) {
+                let squareDirection = 2;
             }
-            if (key = 131) {
-                let direction = 1;
+            if (key = 52) {
+                let squareDirection = 3;
             }
-            if (key = 133) {
-                let direction = 2;
-            }
-            if (key = 130) {
-                let direction = 3;
-            }
-            if (key = 132) {
-                let direction = 4;
+            if (key = 54) {
+                let squareDirection = 4;
             }
             if (key = 55) {
-                let direction = 5;
+                let squareDirection = 5;
             }
             if (key = 57) {
-                let direction = 6;
+                let squareDirection = 6;
             }
             if (key = 49) {
-                let direction = 7;
+                let squareDirection = 7;
             }
             if (key = 51) {
-                let direction = 8;
+                let squareDirection = 8;
             }
-            
+            if (key = 0) {
+                let squareDirection = 0;
+            }
+
             // waits for the key to be released.
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
@@ -94,22 +91,38 @@ class SquareGame {
         return;
 	}
 
-    /** Moves the square by 2 pixels in the current direction. */
+    /** Moves the square by 1 pixels in the current direction. */
     method void moveSquare() {
-        if (direction = 1) {
+        if (squareDirection = 1) {
             do square.moveUp();
         }
-        if (direction = 2) {
+        if (squareDirection = 2) {
             do square.moveDown();
         }
-        if (direction = 3) {
+        if (squareDirection = 3) {
             do square.moveLeft();
         }
-        if (direction = 4) {
+        if (squareDirection = 4) {
             do square.moveRight();
         }
+        if (squareDirection = 5) {
+            do square.moveUp();
+            do square.moveLeft();
+        }
+        if (squareDirection = 6) {
+            do square.moveUp();
+            do square.moveRight();
+        }
+        if (squareDirection = 7) {
+            do square.moveLeft();
+            do square.moveDown();
+        }
+        if (squareDirection = 8) {
+            do square.moveRight();
+            do square.moveDown();
+        }
 
-        do Sys.wait(5); // Delays the next movement.
+        do Sys.wait(3); // Delays the next movement.
         return;
     }
 }
