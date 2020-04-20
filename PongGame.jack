@@ -31,7 +31,7 @@ class PongGame {
         let square = Square.new(250, 122, 10);
         let player1 = GameCharacter.new(505, 103, 5, 48);
         let player2 = GameCharacter.new(0, 103, 5, 48);
-        let squareDirection = 0;
+        let squareDirection = 3;
         let player1Direction = 0;
         let player2Direction = 0;
 
@@ -52,6 +52,8 @@ class PongGame {
         var boolean exit;
 
         let exit = false;
+
+        do Sys.wait(2000);
 
         while (~exit) {
             // waits for a key to be pressed.
@@ -75,12 +77,6 @@ class PongGame {
             }
             if ((key = 83) | (key = 115)) {
                 let player2Direction = 2;
-            }
-            if (key = 130) {
-                let squareDirection = 3;
-            }
-            if (key = 132) {
-                let squareDirection = 4;
             }
 
             // waits for the key to be released.
@@ -212,13 +208,7 @@ class PongGame {
                 let squareDirection = 6;
             }
         }
-
-        /* if((((square.getX()+square.getSize()) = player1.getX()) | ((square.getX()+square.getSize()) > player1.getX())) & ((square.getY() > player1.getY()+square.getSize()) & (square.getY() < (player1.getY()+player1.getHeight())))){
-            let squareDirection = 5;
-        }
-        if(((square.getX() = (player1.getX()+player1.getWidth())) | (square.getX() < (player1.getX()+player1.getWidth()))) & ((square.getY() > player1.getY()+square.getSize()) & (square.getY() < (player1.getY()+player1.getHeight())))){
-            let squareDirection = 7;
-        } */
+        
         return;
     }
 }
