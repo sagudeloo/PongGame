@@ -18,7 +18,7 @@ class PongGame {
     field Square square;
 
     // The players
-    field Character player1, player2;
+    field GameCharacter player1, player2;
 
     // The square's movement direction
     field int squareDirection; // 0=none,1=up,2=down,3=left,4=right,5=up+left,6=down+right,7=up+right,8=down+left
@@ -28,10 +28,12 @@ class PongGame {
 
     /** Constructs a new Square Game. */
     constructor PongGame new() {
-        let square = Square.new(250, 122);
-        let player1 = Character.new(505, 103);
-        let player2 = Character.new(0, 103);
+        let square = Square.new(250, 122, 10);
+        let player1 = GameCharacter.new(505, 103, 5, 48);
+        let player2 = GameCharacter.new(0, 103, 5, 48);
         let squareDirection = 0;
+        let player1Direction = 0;
+        let player2Direction = 0;
 
         return this;
     }
@@ -146,6 +148,8 @@ class PongGame {
             let squareDirection = 13 - squareDirection;
         }
 
+        //do shotsDetection();
+
         if(goalLimits()){
             let squareDirection = 7 - squareDirection;
             do square.reset();
@@ -156,8 +160,9 @@ class PongGame {
         return;
     }
 
+    /** Detect whe the square touch the side limits*/
     method boolean sideLimits(){
-        if((square.getY() < 1) | (square.getY() = 1) | ((square.getY()+10) > 254) | ((square.getY()+10) = 254)){
+        if((square.getY() < 1) | (square.getY() = 1) | ((square.getY()+square.getSize()) > 254) | ((square.getY()+square.getSize()) = 254)){
             return true;
         }
         return false;
@@ -165,13 +170,18 @@ class PongGame {
 
     /** Detect when the square touch the goals limits*/  
     method boolean goalLimits(){
-        if((square.getX() < 1) | (square.getX() = 1) | ((square.getX()+10) > 510) | ((square.getX()+10) = 510)){
+        if((square.getX() < 1) | (square.getX() = 1) | ((square.getX()+square.getSize()) > 510) | ((square.getX()+square.getSize()) = 510)){
             return true;
         }
         return false;
     }
-
-    /* method void detectShots(){
-
+    
+    /** Detect when the square touch a game character
+      * then change the square to a new direction
+      */
+    /* method void shotsDetection(){
+        if(((square.getX()+square.getSize()) = player1.getX()) & ((square.getY()+square.getSize()) > player1.getY()-1) & ((square.getY()+square.getSize()) < (player1.getY()+player1.getHeight()+1))){
+            let squareDirection = 7 - squareDirection;
+        }
     } */
 }

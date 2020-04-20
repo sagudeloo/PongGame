@@ -7,7 +7,7 @@
  * Esta clase implementa un Rectangulo que representa
  * un jugador de juego pong
  */
-class Character {
+class GameCharacter {
 
     // Location on the screen
     field int x, y;
@@ -15,12 +15,12 @@ class Character {
     // The size of the square
     field int width, height;
 
-    /** Constructs a new square with a given location and size. */
-    constructor Character new(int Ax, int Ay) {
+    /** Constructs a new square with a given location, width and height. */
+    constructor GameCharacter new(int Ax, int Ay, int Awidth, int Aheight) {
         let x = Ax;
         let y = Ay;
-        let width = 5;
-        let height = 48;
+        let width = Awidth;
+        let height = Aheight;
 
         do draw();
 
@@ -69,5 +69,21 @@ class Character {
             do Screen.drawRectangle(x, (y + height) - 1, x + width, y + height);
         }
         return;
+    }
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+    method int getWidth() {
+        return width;
+    }
+
+    method int getHeight() {
+        return height;
     }
 }

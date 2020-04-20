@@ -17,12 +17,12 @@ class Square {
     field int size;
 
     /** Constructs a new square with a given location and size. */
-    constructor Square new(int Ax, int Ay) {
+    constructor Square new(int Ax, int Ay, int Asize) {
         let x = Ax;
         let defaultX = Ax;
         let y = Ay;
         let defaultY = Ay;
-        let size = 10;
+        let size = Asize;
 
         do draw();
 
@@ -112,5 +112,9 @@ class Square {
 
     method int getY(){
         return y;
+    }
+
+    method int getSize(){
+        return size;
     }
 }
