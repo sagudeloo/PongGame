@@ -21,7 +21,7 @@ class PongGame {
     field Character player1, player2;
 
     // The square's movement direction
-    field int squareDirection; // 0=none,1=up,2=down,3=left,4=right,5=up+left,6=up+right,7=down+ĺeft,8=down*right
+    field int squareDirection; // 0=none,1=up,2=down,3=left,4=right,5=up+left,6=down+right,7=up+right,8=down+left
 
     // Tha player's movement direction
     field int player1Direction, player2Direction; // 0=none,1=up,2=down
@@ -130,16 +130,20 @@ class PongGame {
             do square.moveLeft();
         }
         if (squareDirection = 6) {
-            do square.moveUp();
+            do square.moveDown();
             do square.moveRight();
         }
         if (squareDirection = 7) {
-            do square.moveLeft();
-            do square.moveDown();
+            do square.moveUp();
+            do square.moveRight();
         }
         if (squareDirection = 8) {
-            do square.moveRight();
             do square.moveDown();
+            do square.moveLeft();
+        }
+
+        if(sideLimits()){
+            let squareDirection = 13 - squareDirection;
         }
 
         if(goalLimits()){
@@ -152,6 +156,13 @@ class PongGame {
         return;
     }
 
+    method boolean sideLimits(){
+        if((square.getY() < 1) | (square.getY() = 1) | ((square.getY()+10) > 254) | ((square.getY()+10) = 254)){
+            return true;
+        }
+        return false;
+    }
+
     /** Detect when the square touch the goals limits*/  
     method boolean goalLimits(){
         if((square.getX() < 1) | (square.getX() = 1) | ((square.getX()+10) > 510) | ((square.getX()+10) = 510)){
@@ -159,4 +170,8 @@ class PongGame {
         }
         return false;
     }
+
+    /* method void detectShots(){
+
+    } */
 }
