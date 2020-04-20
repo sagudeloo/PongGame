@@ -110,11 +110,25 @@ class PongGame {
         if(player2Direction = 2){
             do player2.moveDown();
         }
+        do player1.draw();
+        do player2.draw();
         return;
     }
 
     /** Moves the square by 2 pixels in the current direction. */
     method void moveSquare() {
+        do shotsDetection();
+
+        if(sideLimits()){
+            let squareDirection = 13 - squareDirection;
+        }
+
+        if(goalLimits()){
+            let squareDirection = 3;
+            do square.reset();
+            do Sys.wait(500);
+        }
+
         if (squareDirection = 1) {
             do square.moveUp();
         }
@@ -144,18 +158,6 @@ class PongGame {
             do square.moveLeft();
         }
 
-        if(sideLimits()){
-            let squareDirection = 13 - squareDirection;
-        }
-
-        //do shotsDetection();
-
-        if(goalLimits()){
-            let squareDirection = 7 - squareDirection;
-            do square.reset();
-            do Sys.wait(500);
-        }
-
         do Sys.wait(5); // Delays the next movement.
         return;
     }
@@ -179,9 +181,44 @@ class PongGame {
     /** Detect when the square touch a game character
       * then change the square to a new direction
       */
-    /* method void shotsDetection(){
-        if(((square.getX()+square.getSize()) = player1.getX()) & ((square.getY()+square.getSize()) > player1.getY()-1) & ((square.getY()+square.getSize()) < (player1.getY()+player1.getHeight()+1))){
-            let squareDirection = 7 - squareDirection;
+    method void shotsDetection(){
+        // Compueba que este en la columna en la que esta el caracter del jugador 1
+        if(((square.getX()+square.getSize()) = player1.getX()) | ((square.getX()+square.getSize()) > player1.getX())){
+            // Comprueba que este donde se encuentra la seccion 3 del caracter del jugador 1
+            if(square.getY() < (player1.getY()+player1.getHeight())){
+                let squareDirection = 5;
+            }
+            // comprueba que este donde se encuentra la seccion 2 del caracter del jugador 1
+            if(square.getY() < (player1.getY()+Math.multiply(Math.divide(player1.getHeight(),3),2))){
+                let squareDirection = 3;
+            }
+            // Comprueba que este donde se encuentra la seccion 1 del caracter del jugador 1
+            if((square.getY() > player1.getY()-square.getSize()) & (square.getY() < (player1.getY()+Math.divide(player1.getHeight(),3)))){
+                let squareDirection = 8;
+            }
         }
-    } */
+
+        if(((square.getX() = (player2.getX()+player1.getWidth())) | (square.getX() < (player2.getX()+player1.getWidth())))){
+            // Comprueba que este donde se encuentra la seccion 3 del caracter del jugador 2
+            if(square.getY() < (player2.getY()+player2.getHeight())){
+                let squareDirection = 7;
+            }
+            // comprueba que este donde se encuentra la seccion 2 del caracter del jugador 2
+            if(square.getY() < (player2.getY()+Math.multiply(Math.divide(player2.getHeight(),3),2))){
+                let squareDirection = 4;
+            }
+            // Comprueba que este donde se encuentra la seccion 1 del caracter del jugador 2
+            if((square.getY() > player2.getY()-square.getSize()) & (square.getY() < (player2.getY()+Math.divide(player1.getHeight(),3)))){
+                let squareDirection = 6;
+            }
+        }
+
+        /* if((((square.getX()+square.getSize()) = player1.getX()) | ((square.getX()+square.getSize()) > player1.getX())) & ((square.getY() > player1.getY()+square.getSize()) & (square.getY() < (player1.getY()+player1.getHeight())))){
+            let squareDirection = 5;
+        }
+        if(((square.getX() = (player1.getX()+player1.getWidth())) | (square.getX() < (player1.getX()+player1.getWidth()))) & ((square.getY() > player1.getY()+square.getSize()) & (square.getY() < (player1.getY()+player1.getHeight())))){
+            let squareDirection = 7;
+        } */
+        return;
+    }
 }
