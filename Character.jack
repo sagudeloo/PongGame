@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/Square.jack
+// File name: Pong/Character.jack
 
 /**
  * Esta clase implementa un Rectangulo que representa
@@ -19,8 +19,8 @@ class Character {
     constructor Character new(int Ax, int Ay) {
         let x = Ax;
         let y = Ay;
-        let width = 10;
-        let height = 40;
+        let width = 5;
+        let height = 48;
 
         do draw();
 
@@ -63,7 +63,7 @@ class Character {
     method void moveDown() {
         if ((y + height) < 254) {
             do Screen.setColor(false);
-            do Screen.drawRectangle(x, y, x + height, y + 1);
+            do Screen.drawRectangle(x, y, x + width, y + 1);
             let y = y + 1;
             do Screen.setColor(true);
             do Screen.drawRectangle(x, (y + height) - 1, x + width, y + height);

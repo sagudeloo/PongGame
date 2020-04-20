@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/Main.jack
+// File name: Pong/Main.jack
 
 /**
  * The Main class initializes a new Square Dance game and starts it.
@@ -10,9 +10,9 @@ class Main {
 
     /** Initializes a new game and starts it. */    
     function void main() {
-        var SquareGame game;
+        var PongGame game;
 
-        let game = SquareGame.new();
+        let game = PongGame.new();
         do game.run();
 	    do game.dispose();
 

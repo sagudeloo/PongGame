@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/SquareGame.jack
+// File name: Pong/PongGame.jack
 
 /**
  * Implements the Square Dance game.
@@ -12,17 +12,25 @@
  * The 'z' & 'x' keys are used to decrement and increment the size.
  * The 'q' key is used to quit the game.
  */
-class SquareGame {
+class PongGame {
 
     // The square
     field Square square;
 
+    // The players
+    field Character player1, player2;
+
     // The square's movement direction
-    field int squareDirection; // 0=none,1=up,2=down,3=left,4=right
+    field int squareDirection; // 0=none,1=up,2=down,3=left,4=right,5=up+left,6=up+right,7=down+ĺeft,8=down*right
+
+    // Tha player's movement direction
+    field int player1Direction, player2Direction; // 0=none,1=up,2=down
 
     /** Constructs a new Square Game. */
-    constructor SquareGame new() {
-        let square = Square.new(0, 0);
+    constructor PongGame new() {
+        let square = Square.new(250, 122);
+        let player1 = Character.new(505, 103);
+        let player2 = Character.new(0, 103);
         let squareDirection = 0;
 
         return this;
@@ -47,51 +55,63 @@ class SquareGame {
             // waits for a key to be pressed.
             while (key = 0) {
                 let key = Keyboard.keyPressed();
-                //do moveSquare();
+                do moveSquare();
+                do movePlayers();
             }
 
             if (key = 81) {
                 let exit = true;
             }
-            if (key = 56) {
-                let squareDirection = 1;
+            if (key = 131) {
+                let player1Direction = 1;
             }
-            if (key = 50) {
-                let squareDirection = 2;
+            if (key = 133) {
+                let player1Direction = 2;
             }
-            if (key = 52) {
+            if ((key = 87) | (key = 119)) {
+                let player2Direction = 1;
+            }
+            if ((key = 83) | (key = 115)) {
+                let player2Direction = 2;
+            }
+            if (key = 130) {
                 let squareDirection = 3;
             }
-            if (key = 54) {
+            if (key = 132) {
                 let squareDirection = 4;
-            }
-            if (key = 55) {
-                let squareDirection = 5;
-            }
-            if (key = 57) {
-                let squareDirection = 6;
-            }
-            if (key = 49) {
-                let squareDirection = 7;
-            }
-            if (key = 51) {
-                let squareDirection = 8;
-            }
-            if (key = 0) {
-                let squareDirection = 0;
             }
 
             // waits for the key to be released.
             while (~(key = 0)) {
                 let key = Keyboard.keyPressed();
                 do moveSquare();
+                do movePlayers();
             }
+            let player1Direction = 0;
+            let player2Direction = 0;
         }
             
         return;
 	}
 
-    /** Moves the square by 1 pixels in the current direction. */
+    /** Mover the players by 2 pixels in the current direction. */
+    method void movePlayers(){
+        if(player1Direction = 1){
+            do player1.moveUp();
+        }
+        if(player1Direction = 2){
+            do player1.moveDown();
+        }
+        if(player2Direction = 1){
+            do player2.moveUp();
+        }
+        if(player2Direction = 2){
+            do player2.moveDown();
+        }
+        return;
+    }
+
+    /** Moves the square by 2 pixels in the current direction. */
     method void moveSquare() {
         if (squareDirection = 1) {
             do square.moveUp();
@@ -122,7 +142,21 @@ class SquareGame {
             do square.moveDown();
         }
 
-        do Sys.wait(3); // Delays the next movement.
+        if(goalLimits()){
+            let squareDirection = 7 - squareDirection;
+            do square.reset();
+            do Sys.wait(500);
+        }
+
+        do Sys.wait(5); // Delays the next movement.
         return;
+    }
+
+    /** Detect when the square touch the goals limits*/  
+    method boolean goalLimits(){
+        if((square.getX() < 1) | (square.getX() = 1) | ((square.getX()+10) > 510) | ((square.getX()+10) = 510)){
+            return true;
+        }
+        return false;
     }
 }
